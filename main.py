@@ -46,15 +46,22 @@ def save_fnc():
     if secret == "\n" or secret == "0" or master == "" or title == "":
         tkinter.messagebox.showerror("Error", "You should fill the Title, Secret and Master fields!")
 
-    encrypted_string = cryptocode.encrypt(secret, master)
+    else:
+        encrypted_string = cryptocode.encrypt(secret, master)
+        try:
+            with open("my_secret.txt", mode="a") as myFile:
+                myFile.write(title)
+                myFile.write("\n")
+                myFile.write(encrypted_string)
+                myFile.write("\n")
+                #myFile.write(f"\n{title}\n{encrypted_string}")
+                myFile.close()
+        except FileNotFoundError:
+            with open("my_secret.txt", mode="w") as myFile:
+                myFile.write(f"\n{title}\n{encrypted_string}")
+                myFile.close()
 
-    with open("my_secret.txt", mode="a") as myFile:
-        myFile.write(title)
-        myFile.write("\n")
-        myFile.write(encrypted_string)
-        myFile.write("\n")
-        myFile.close()
-
+        tkinter.messagebox.showinfo("Saved", "Your file is saved!")
 # decrypt function
 def dec_fnc():
 
