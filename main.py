@@ -60,6 +60,10 @@ def save_fnc():
             with open("my_secret.txt", mode="w") as myFile:
                 myFile.write(f"\n{title}\n{encrypted_string}")
                 myFile.close()
+        finally:
+            title_entry.delete(0, tkinter.END)
+            secret_text.delete("1.0", tkinter.END)
+            master_key_entry.delete(0, tkinter.END)
 
         tkinter.messagebox.showinfo("Saved", "Your file is saved!")
 # decrypt function
@@ -70,9 +74,9 @@ def dec_fnc():
 
     if secret == "\n" or secret == "0" or master == "":
         tkinter.messagebox.showerror("Error", "You should fill the Secret and Master fields!")
-
-    decrypted_string = cryptocode.decrypt(secret, master)
-    secret_text.replace("1.0", tkinter.END, decrypted_string)
+    else:
+        decrypted_string = cryptocode.decrypt(secret, master)
+        secret_text.replace("1.0", tkinter.END, decrypted_string)
 
 # save_button
 save_button = tkinter.Button(text="Save & Encrypt", font=('Arial', 10, 'normal'), command=save_fnc)
